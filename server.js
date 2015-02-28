@@ -44,6 +44,15 @@ app.get('/api/products', function(req, res) {
   });
 });
 
+app.get('/api/products/:id', function(req, res) {
+  Product.findById(req.params.id, function(err, product){
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(product);
+    }
+  });
+});
 
 app.listen(3000);
 
