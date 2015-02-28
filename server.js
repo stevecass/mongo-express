@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var objectIdCheck = require('mongodb').ObjectID;
 app.use(bodyParser.json());
 
 mongoose.connect('mongodb://localhost/mydb');
@@ -26,7 +27,7 @@ new Product({name: 'Washing Machine', price:714.99 })  ];
 sampleProducts.forEach(function(ele) { 
   ele.save(function (err, ele) {
     if (err) {
-      return console.error(err);
+      console.erroror(err);
     }
   });
 });
@@ -39,7 +40,7 @@ app.get('/', function(req, res){
 app.get('/api/products', function(req, res) {
   Product.find(function(err, products){
     if (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).send('Error');
     } else {
       res.send(products);
@@ -50,7 +51,7 @@ app.get('/api/products', function(req, res) {
 app.get('/api/products/:id', function(req, res) {
   Product.findById(req.params.id, function(err, product){
     if (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).send('Error');
     } else if (product === null) {
       res.status(404).send('Not found');
@@ -68,7 +69,7 @@ app.post('/api/products', function(req, res){
   product.save(function(err, newprod) {
     if (err) {
       res.status(500).send('Error');
-      console.log(err);
+      console.error(err);
     } else {
       res.status(201);
       res.send(product);
@@ -80,14 +81,14 @@ app.put('/api/products/:id', function(req, res){
   cb = function(err, product) {};
   product = Product.findById(req.params.id, function(err, product){
     if (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).send('Error');
     } else {
       product.name = req.body.name;
       product.price = req.body.price;
       product.save(function(err, product){
         if (err) {
-          console.log(err);
+          console.error(err);
           res.status(500).send('Error');
         } else if (product === null) {
           res.status(404).send('Not found');
@@ -103,14 +104,14 @@ app.put('/api/products/:id', function(req, res){
 app.delete('/api/products/:id', function(req, res){
   product = Product.findById(req.params.id, function(err, product){
     if (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).send('Error');
     } else if (product === null) {
       res.status(404).send('Not found');
     } else {
       product.remove(function (err) {
         if (err) {
-          console.log(err);
+          console.error(err);
           res.status(500).send('Error');
         } else {
           res.status(204);
