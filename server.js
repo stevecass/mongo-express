@@ -74,5 +74,27 @@ app.post('/api/products', function(req, res){
   });
 });
 
+app.put('/api/products/:id', function(req, res){
+  cb = function(err, product) {};
+  product = Product.findById(req.params.id, function(err, product){
+    if (err) {
+      console.log(err);
+      res.status(500).send('Error');
+    } else {
+      product.name = req.body.name;
+      product.price = req.body.price;
+      product.save(function(err, product){
+        if (err) {
+          console.log(err);
+          res.status(500).send('Error');
+        } else {
+          res.status(200);
+          res.send(product);
+        }
+      });
+    }
+  });
+});
+
 app.listen(3000);
 
