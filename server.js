@@ -40,6 +40,7 @@ app.get('/api/products', function(req, res) {
   Product.find(function(err, products){
     if (err) {
       console.log(err);
+      res.status(500).send('Error');
     } else {
       res.send(products);
     }
@@ -50,6 +51,7 @@ app.get('/api/products/:id', function(req, res) {
   Product.findById(req.params.id, function(err, product){
     if (err) {
       console.log(err);
+      res.status(500).send('Error');
     } else {
       res.send(product);
     }
@@ -63,8 +65,10 @@ app.post('/api/products', function(req, res){
   });
   product.save(function(err, newprod) {
     if (err) {
+      res.status(500).send('Error');
       console.log(err);
     } else {
+      res.status(201);
       res.send(product);
     }
   });
