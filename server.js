@@ -115,7 +115,7 @@ app.delete('/api/products/:id', function(req, res){
           console.error(err);
           res.status(500).send('Error');
         } else {
-          res.status(204);
+          res.status(204).send('OK');
         }
       });
     }
