@@ -1,0 +1,27 @@
+<div id="steven_temp">
+  {{data.product}}
+</div>
+<table id="products" class="table table-responsive table-striped">
+  <tr>
+    <th>Name</th>
+    <th class="numeric">Price</th>
+    <th>Actions</th>
+  </tr>
+  <tr ng-repeat="p in data.products">
+    <td class="name"><a ng-href="" ng-bind="p.name"></a></td>
+    <td class="price numeric" ng-bind="p.price | currency"></td>
+    <td>
+      <a ng-click="showOne(p._id)">show</a>
+      <a ng-href="">edit</a>
+      <a ng-click="deleteOne(p._id)">delete</a>
+    </td>
+  </tr>
+</table>
+
+
+<!-- Let's let bootstrap make that a fancy table, just to save time -->
+<script>
+   jQuery(document.ready) {
+
+   }
+</script>

@@ -23,7 +23,7 @@ var setObjectFieldsFromParams = function(obj, params) {
 
 
 app.get('/', function(req, res){
-  res.send('hello world');
+  res.redirect("/index.html");
 });
 
 app.all('/api/products/:id', function(req, res, next){
