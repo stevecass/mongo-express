@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var objectIdCheck = require('mongodb').ObjectID;
+var objectID = require('mongodb').ObjectID;
 app.use(bodyParser.json());
 
 mongoose.connect('mongodb://localhost/mydb');
@@ -36,6 +36,21 @@ sampleProducts.forEach(function(ele) {
 app.get('/', function(req, res){
   res.send('hello world');
 });
+
+app.all('/api/products/*', function(req, res, next){
+  // If we get a product id it should be valid - else return a 404
+  if (req.params.id) {
+    if (!objectID.isValid(req.params.id)) {
+      console.log("Passed invalid object id: " + req.params.id);
+      res.status(404).send('Not found');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
 
 app.get('/api/products', function(req, res) {
   Product.find(function(err, products){
@@ -83,6 +98,8 @@ app.put('/api/products/:id', function(req, res){
     if (err) {
       console.error(err);
       res.status(500).send('Error');
+    } else if (product === null) {
+      res.status(404).send('Not found');
     } else {
       product.name = req.body.name;
       product.price = req.body.price;
