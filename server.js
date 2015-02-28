@@ -1,4 +1,5 @@
 var application_root = __dirname;
+var publicDir = application_root + "/public";
 var express = require("express");
 var path = require("path");
 var mongoose = require('mongoose');
@@ -7,7 +8,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var objectID = require('mongodb').ObjectID;
 app.use(bodyParser.json());
-
+app.use(express.static(publicDir));
 mongoose.connect('mongodb://localhost/mydb');
 
 var Product = require('./models/product.js')(mongoose);
@@ -38,7 +39,6 @@ app.all('/api/products/:id', function(req, res, next){
     next();
   }
 });
-
 
 app.get('/api/products', function(req, res) {
   Product.find(function(err, products){
