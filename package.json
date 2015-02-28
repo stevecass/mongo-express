@@ -1,0 +1,9 @@
+{
+  "name": "SimpleMean",
+  "description": "A simple mongo - express - angular - node app",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.12.0",
+    "mongoose": "^3.8.24"
+  }
+}
