@@ -4,6 +4,8 @@ var path = require("path");
 var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 mongoose.connect('mongodb://localhost/mydb');
 
@@ -46,6 +48,20 @@ app.get('/api/products', function(req, res) {
 
 app.get('/api/products/:id', function(req, res) {
   Product.findById(req.params.id, function(err, product){
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(product);
+    }
+  });
+});
+
+app.post('/api/products', function(req, res){
+  product = new Product({
+    name: req.body.name,
+    price: req.body.price
+  });
+  product.save(function(err, newprod) {
     if (err) {
       console.log(err);
     } else {
