@@ -96,5 +96,18 @@ app.put('/api/products/:id', function(req, res){
   });
 });
 
+app.delete('/api/products/:id', function(req, res){
+  product = Product.findById(req.params.id, function(err, product){
+    product.remove(function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Error');
+      } else {
+        res.status(204);
+      }
+    });
+  });
+});
+
 app.listen(3000);
 
