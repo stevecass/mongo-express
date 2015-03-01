@@ -6,11 +6,6 @@ angular.module('products'). controller('MainController', ['$scope', '$location',
     $scope.data.products = data;
   });
 
-  $scope.showOne = function(id) {
-    console.log('show one called for:' + id);
-    $location.path('/detail/' + id);
-  };
-
   $scope.deleteOne = function(id) {
     Product.remove({id: id}).$promise.then(function(data){
      $scope.data.products = $scope.data.products.filter(function(ele){
