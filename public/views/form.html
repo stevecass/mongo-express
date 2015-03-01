@@ -1,0 +1,16 @@
+<form>
+  <div class="form-group">
+    <label for="name">Prduct Name</label>
+    <input type="text" class="form-control" id="name" placeholder="Name" ng-model="product.name">
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" class="form-control" id="description" placeholder="Description" ng-model="product.description">
+  </div>
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="text" class="form-control" id="price" placeholder="Price" ng-model="product.price">
+  </div>
+
+  <button type="submit" class="btn btn-default" ng-click="saveProduct()">Submit</button>
+</form>
