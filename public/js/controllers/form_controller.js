@@ -1,9 +1,17 @@
 angular.module('products'). controller('FormController', 
-  ['$scope', '$location', 'Product', function($scope, $location, Product ){
+  ['$scope', '$location', '$route', 'Product', function($scope, $location, $route, Product ){
   console.log('FormController init');
+  
 
-  $scope.product = {};
-  $scope.product.is_new = $location.url() === '/new';
+  if($location.url() === '/new') {
+    $scope.product = {};  
+    $scope.product.is_new = true;
+  } else {
+    p = Product.getOne({id: $route.current.params.id});
+    p.$promise.then(function(data){
+      $scope.product = data; 
+    });
+  }
 
   console.log($location.url());
 
@@ -12,6 +20,7 @@ angular.module('products'). controller('FormController',
     if ($scope.product.is_new) {
       retval = Product.post($scope.product);
     } else {
+      console.log('product', $scope.product);
       retval = Product.update($scope.product);
     }
     retval.$promise.then(function(data){
