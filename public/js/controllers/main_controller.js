@@ -1,9 +1,13 @@
-angular.module('products'). controller('MainController', ['$scope', '$location', 'Product', function($scope, $location, Product ){
+angular.module('products'). controller('MainController', 
+  ['$scope', '$location', 'Product', 'Shared',
+  function($scope, $location, Product, Shared){
   console.log('MainController init');
   $scope.data = {};
 
   Product.query().$promise.then(function(data){
     $scope.data.products = data;
+    Shared.product = null;
+
   });
 
   $scope.deleteOne = function(id) {

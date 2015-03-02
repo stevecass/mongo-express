@@ -1,7 +1,7 @@
 angular.module('products'). controller('FormController', 
-  ['$scope', '$location', '$route', 'Product', function($scope, $location, $route, Product ){
-  console.log('FormController init');
-  
+  ['$scope', '$location', '$route', 'Product', 'Shared',
+  function($scope, $location, $route, Product, Shared ){
+
   function Feedback(type, message) {
     this.type = type;
     this.message = message;
@@ -11,6 +11,7 @@ angular.module('products'). controller('FormController',
     $scope.mainHeader = "Create Product";
     $scope.product = {};
     $scope.product.is_new = true;
+    Shared.product = null;
   }
 
   $scope.feedback = [];
@@ -20,6 +21,7 @@ angular.module('products'). controller('FormController',
     p = Product.getOne({id: $route.current.params.id});
     p.$promise.then(function(data){
       $scope.product = data; 
+      Shared.product = data;
       $scope.mainHeader = "Edit Product " + $scope.product.name;
     });
   }

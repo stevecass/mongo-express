@@ -19,3 +19,6 @@ angular.module('products'). factory('Product', ['$resource', function($resource)
   });
 }]);
 
+angular.module('products'). factory('Shared', [function($resource){
+    return {};
+}]);

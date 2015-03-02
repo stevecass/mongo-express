@@ -1,7 +1,12 @@
-angular.module('products'). controller('DetailController', ['$scope', '$location', '$route', 'Product', function($scope, $location, $route, Product ){
-  console.log('DetailController init');
+angular.module('products'). controller('DetailController', 
+  ['$scope', '$location', '$route', 'Product', 'Shared',
+  function($scope, $location, $route, Product, Shared ){
   Product.getOne({id: $route.current.params.id}).$promise.then(function(data){
    $scope.product = data; 
+   Shared.product = data;
+   console.log('Shared', Shared);
   });
+ 
+
 }]);
 

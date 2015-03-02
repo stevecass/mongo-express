@@ -19,19 +19,21 @@
     <script src="/js/controllers/main_controller.js"></script>
     <script src="/js/controllers/form_controller.js"></script>
     <script src="/js/controllers/detail_controller.js"></script>
+    <script src="/js/controllers/header_controller.js"></script>
 
     <title>Minimal Angular Client</title>
   </head>
 
-  <body class="vanilla">
-  <header>
+  <body class="vanilla"  ng-app="products">
+  <header ng-controller="HeaderController">
     <ul class="nav nav-pills">
       <li role="presentation"><a href="#/main">Home</a></li>
       <li role="presentation"><a href="#/new">New product</a></li>
-      <li role="presentation"><a href="#/main">Placeholder</a></li>
+      <li role="presentation"><a ng-show="product.name" ng-href="#/edit/{{product._id}}">Edit</a></li>
+      <li role="presentation"><a ng-show="product.name" ng-href="#/detail/{{product._id}}">Detail</a></li>
     </ul>
   </header>
-  <section id="products" ng-app="products">
+  <section id="products">
     <div class="container" ng-view=""></div>
   </section>
   </body>
