@@ -4,12 +4,14 @@ angular.module('products'). controller('FormController',
   
 
   if($location.url() === '/new') {
-    $scope.product = {};  
+    $scope.product = {};
+    $scope.mainHeader = "Create Product";
     $scope.product.is_new = true;
   } else {
     p = Product.getOne({id: $route.current.params.id});
     p.$promise.then(function(data){
       $scope.product = data; 
+      $scope.mainHeader = "Edit Product " + $scope.product.name;
     });
   }
 
