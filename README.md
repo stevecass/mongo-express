@@ -19,20 +19,20 @@ You will need to have node and npm on your machine
 You can use curl to send commands.
 
 #### list products
-curl -i http://localhost:3000/api/products
+```curl -i http://localhost:3000/api/products```
 
 #### create a product
-curl -i -d '{ "name": "new product", "price":"123.45" }' -H "Content-Type: application/json" http://localhost:3000/api/products
+```curl -i -d '{ "name": "new product", "price":"123.45" }' -H "Content-Type: application/json" http://localhost:3000/api/products```
 
 #### read a product
-curl  -i localhost:3000/api/products/54f12ab3383e431c6e9213a1
+```curl  -i localhost:3000/api/products/54f12ab3383e431c6e9213a1```
 
 #### update a product
-curl -X PUT -i -d '{ "name": "updated product", "price":"123.45" }' -H "Content-Type: application/json" http://localhost:3000/api/products/54f12ab3383e431c6e9213a1
+```curl -X PUT -i -d '{ "name": "updated product", "price":"123.45" }' -H "Content-Type: application/json" http://localhost:3000/api/products/54f12ab3383e431c6e9213a1```
 
 #### delete a product
-curl -X DELETE -i http://localhost:3000/api/products/54f12ab3383e431c6e9213a1
+```curl -X DELETE -i http://localhost:3000/api/products/54f12ab3383e431c6e9213a1```
 
 
 ### Notes
-There is no security whatsoever here. Also invalid data will cause 500s. This is only intended to be a simple demo.
+There is no security whatsoever here. Also invalid data will cause 500s. This is only intended to be a simple demo. If you were doing this for real you'd want more guards.
