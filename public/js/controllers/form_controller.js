@@ -2,6 +2,11 @@ angular.module('products'). controller('FormController',
   ['$scope', '$location', '$route', 'Product', function($scope, $location, $route, Product ){
   console.log('FormController init');
   
+  function Feedback(type, message) {
+    this.type = type;
+    this.message = message;
+  }
+
   function newProduct() {
     $scope.mainHeader = "Create Product";
     $scope.product = {};
@@ -30,14 +35,14 @@ angular.module('products'). controller('FormController',
       retval = Product.update($scope.product);
     }
     retval.$promise.then(function(data){
-      $scope.feedback.push("Saved " + data.name);
+      $scope.feedback.unshift(new Feedback("success", "Saved " + data.name));
       if($scope.product.is_new) {
         newProduct();
       }
       console.log(data);
     });
     retval.$promise.catch(function(data){
-      $scope.feedback.push('HTTP call failed');
+      $scope.feedback.unshift(new Feedback("danger", "HTTP call failed"));
       console.error('HTTP call failed', data);
     });
 

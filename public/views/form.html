@@ -15,3 +15,12 @@
 
   <button type="submit" class="btn btn-default" ng-click="saveProduct()">Submit</button>
 </form>
+
+
+<div class="panel-heading" ng-show="feedback.length > 0"></div>
+  <div class="panel-body">
+    <div ng-repeat="fb in feedback">
+      <div class="alert alert-{{fb.type}}">{{fb.message}}</div>
+    </div>
+  </div>
+</div>
