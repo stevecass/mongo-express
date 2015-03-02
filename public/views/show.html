@@ -1,11 +1,12 @@
 <div id="product_detail">
-<h1>Product detail for {{data.product.name}}</h1>
-  <div class="container">
-    <div class="detail_label">Name</div>
-    <div class="detail_data" ng-bind="data.product.name"></div>
-  </div>
-  <div class="container">
-    <div class="detail_label">Price</div>
-    <div class="detail_data numeric" ng-bind="data.product.price | currency"></div>
+<h1>Product detail for {{product.name}}</h1>
+  <div class="panel panel-primary">
+    <div class="panel-heading">Details</div>
+        <ul class="list-group">
+      <li class="list-group-item" ng-bind="product.name"></li>
+      <li class="list-group-item" ng-bind="product.description"></li>
+      <li class="list-group-item" ng-bind="product.price | currency"></li>
+    </ul>
+
   </div>
 </div>
