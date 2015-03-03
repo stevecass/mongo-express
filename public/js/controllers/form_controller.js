@@ -36,6 +36,7 @@ angular.module('products'). controller('FormController',
       console.log('product', $scope.product);
       retval = Product.update($scope.product);
     }
+
     retval.$promise.then(function(data){
       $scope.feedback.unshift(new Feedback("success", "Saved " + data.name));
       if($scope.product.is_new) {
@@ -43,8 +44,9 @@ angular.module('products'). controller('FormController',
       }
       console.log(data);
     });
+
     retval.$promise.catch(function(data){
-      $scope.feedback.unshift(new Feedback("danger", "HTTP call failed"));
+      $scope.feedback.unshift(new Feedback("danger", "HTTP call failed: " + data.data));
       console.error('HTTP call failed', data);
     });
 

@@ -69,7 +69,7 @@ app.post('/api/products', function(req, res){
   setObjectFieldsFromParams(product, req.body);
   product.save(function(err, newprod) {
     if (err) {
-      res.status(500).send('Error');
+      res.status(500).send(err.message);
       console.error(err);
     } else {
       res.status(201);
@@ -90,7 +90,7 @@ app.put('/api/products/:id', function(req, res){
       product.save(function(err, product){
         if (err) {
           console.error(err);
-          res.status(500).send('Error');
+          res.status(500).send(err.message);
         } else if (product === null) {
           res.status(404).send('Not found');
         } else {
