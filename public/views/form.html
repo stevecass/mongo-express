@@ -20,7 +20,10 @@
 <div class="panel-heading" ng-show="feedback.length > 0"></div>
   <div class="panel-body">
     <div ng-repeat="fb in feedback">
-      <div class="alert alert-{{fb.type}}">{{fb.message}}</div>
+      <div class="alert alert-{{fb.type}}">{{fb.message}} 
+        <span class="feedback-time">{{fb.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}
+        </span>
+      </div>
     </div>
   </div>
 </div>

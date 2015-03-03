@@ -5,6 +5,7 @@ angular.module('products'). controller('FormController',
   function Feedback(type, message) {
     this.type = type;
     this.message = message;
+    this.createdAt = new Date();
   }
 
   function newProduct() {
@@ -14,10 +15,7 @@ angular.module('products'). controller('FormController',
     Shared.product = null;
   }
 
-  $scope.feedback = [];
-  if($location.url() === '/new') {
-    newProduct();
-  } else {
+  function loadExisting() {
     p = Product.getOne({id: $route.current.params.id});
     p.$promise.then(function(data){
       $scope.product = data; 
@@ -26,7 +24,13 @@ angular.module('products'). controller('FormController',
     });
   }
 
-  console.log($location.url());
+  $scope.feedback = [];
+
+  if($location.url() === '/new') {
+    newProduct();
+  } else {
+    loadExisting();
+  }
 
   $scope.saveProduct = function() {
     var retval;
