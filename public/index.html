@@ -16,6 +16,7 @@
 
     <!-- Local scripts -->
     <script src="/js/app.js"></script>
+    <script src="/js/services/services.js"></script>
     <script src="/js/controllers/main_controller.js"></script>
     <script src="/js/controllers/form_controller.js"></script>
     <script src="/js/controllers/detail_controller.js"></script>
@@ -33,6 +34,7 @@
       <li role="presentation"><a ng-show="product.name" ng-href="#/detail/{{product._id}}">Detail</a></li>
     </ul>
   </header>
+  
   <section id="products">
     <div class="container" ng-view=""></div>
   </section>
