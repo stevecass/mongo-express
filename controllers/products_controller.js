@@ -9,6 +9,16 @@ router.get('/', function(req, res){
   res.redirect("/index.html");
 });
 
+router.all('/api/products/*', function(req, res, next){
+  if (!(req.session && req.session.userId)) {
+    console.log('not logged in');
+    res.status(401).send('Unauthorized');
+  } else {
+    console.log('session user', req.session.userId);
+    next();
+  }
+});
+
 router.all('/api/products/:id', function(req, res, next){
   // If we get a product id it should be valid - else return a 404
   if (req.params.id) {
