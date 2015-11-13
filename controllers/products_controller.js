@@ -6,7 +6,7 @@ var Product = require('../models/product.js')(mongoose);
 var objectID = require('mongodb').ObjectID;
 
 var setObjectFieldsFromParams = function(obj, params) {
-  for (k in obj.schema.paths) {
+  for (var k in obj.schema.paths) {
     if (params[k]) {
       obj[k] = params[k];
     }
