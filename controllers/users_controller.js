@@ -8,16 +8,12 @@ router.post('/api/login', function(req, res) {
   if (err) {
       console.error(err);
       res.status(500).send('Error');
-    } else if (user === null) {
+    } else if (user === null || !user.passwordMatches(req.body.password)) {
       res.status(401).send('Unauthorized');
     } else {
-      if (!user.passwordMatches(req.body.password)) {
-        res.status(401).send('Unauthorized');
-      } else {
-        console.log('session', req.session);
-        req.session.userId = user._id;
-        res.send({userId: user._id});
-      }
+      console.log('session', req.session);
+      req.session.userId = user._id;
+      res.send({userId: user._id});
     }
   });
 });
