@@ -3,14 +3,7 @@ var router   = express.Router();
 var mongoose = require('mongoose');
 var Product = require('../models/product.js')(mongoose);
 var objectID = require('mongodb').ObjectID;
-
-var setObjectFieldsFromParams = function(obj, params) {
-  for (var k in obj.schema.paths) {
-    if (params[k]) {
-      obj[k] = params[k];
-    }
-  }
-};
+var assigner = require('../lib/assigner');
 
 router.get('/', function(req, res){
   res.redirect("/index.html");
@@ -57,7 +50,7 @@ router.get('/api/products/:id', function(req, res) {
 
 router.post('/api/products', function(req, res){
   product = new Product();
-  setObjectFieldsFromParams(product, req.body);
+  assigner.setObjectFieldsFromParams(product, req.body);
   product.save(function(err, newprod) {
     if (err) {
       res.status(500).send(err.message);
