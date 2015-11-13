@@ -1,7 +1,6 @@
 var express  = require('express');
 var router   = express.Router();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mydb');
 var Product = require('../models/product.js')(mongoose);
 var objectID = require('mongodb').ObjectID;
 
