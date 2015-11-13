@@ -13,5 +13,9 @@ module.exports = function(mgoose) {
     return next();
   });
 
+  userSchema.methods.passwordMatches = function(attempt) {
+    return bcrypt.compareSync(attempt, this.password_digest);
+  }
+
   return mgoose.model('User', userSchema);
 };

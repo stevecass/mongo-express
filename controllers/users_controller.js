@@ -1,8 +1,26 @@
 var mongoose = require('mongoose');
-var express  = require('express')
-var router   = express.Router()
+var express  = require('express');
+var router   = express.Router();
 var User     = require('../models/user')(mongoose);
 
+router.post('/api/login', function(req, res) {
+  User.findOne({username: req.body.username}, function(err, user){
+  if (err) {
+      console.error(err);
+      res.status(500).send('Error');
+    } else if (user === null) {
+      res.status(401).send('Unauthorized');
+    } else {
+      if (!user.passwordMatches(req.body.password)) {
+        res.status(401).send('Unauthorized');
+      } else {
+        console.log('session', req.session);
+        req.session.userId = user._id;
+        res.send({userId: user._id});
+      }
+    }
+  });
+});
 
 router.get('/api/users/:id', function(req, res){
   User.findById(req.params.id, function(err, user){
@@ -37,7 +55,7 @@ router.post('/api/users', function(req, res){
     user.save(function(err) {
       console.log('In callback');
       console.log('args', arguments);
-      res.redirect('/api/users/' + user._id)
+      res.redirect('/api/users/' + user._id);
     });
 
 });
