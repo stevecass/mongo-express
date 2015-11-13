@@ -61,19 +61,3 @@ router.post('/api/users', function(req, res){
 });
 
 module.exports = router;
-
-/*
-
-  user = new User();
-  user.username = 'steven';
-  user.email = 'steven@example.com';
-  user.password = 'pw123456';
-  user.save(function(err) {
-    console.log('In callback');
-    console.log('args', arguments);
-  });
-  console.log(user);
-
-
-
-*/
