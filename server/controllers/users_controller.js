@@ -18,8 +18,9 @@ router.post('/api/login', function(req, res) {
   });
 });
 
-router.get('/api/users/:id', function(req, res){
-  User.findById(req.params.id, function(err, user){
+
+function sendUserById(req, res, id) {
+  User.findById(id, function(err, user){
     if (err) {
       console.error(err);
       res.status(500).send('Error');
@@ -29,6 +30,15 @@ router.get('/api/users/:id', function(req, res){
       res.send(user);
     }
   });
+}
+
+
+router.get('/api/current-user', function(req, res){
+  sendUserById(req, res, req.session.userId);
+});
+
+router.get('/api/users/:id', function(req, res){
+  sendUserById(req, res, req.params.id);
 });
 
 router.get('/api/users', function(req, res){
