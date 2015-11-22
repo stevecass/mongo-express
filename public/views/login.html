@@ -1,0 +1,34 @@
+<h2>Login</h2>
+<form role="form" id="login-form" ng-submit="login()">
+  <div class="form-group">
+    <label for="username">Username:</label>
+    <input id="username" type="text" ng-model="username">
+  </div>
+  <div class="form-group" >
+    <label for="password">Password:</label>
+    <input id="password" type="password" ng-model="password">
+  </div>
+  <div class="form-group" >
+    <button type="submit" class="btn btn-default">Log in</button>
+  </div>
+</form>
+
+<h2>Register</h2>
+
+<form role="form" id="register-form" ng-submit="register()">
+  <div class="form-group"  class="form-group">
+    <label for="username">Username:</label>
+    <input id="username" type="text" ng-model="username">
+  </div>
+  <div class="form-group" >
+    <label for="password">Password:</label>
+    <input id="password" type="password" ng-model="password">
+  </div>
+  <div class="form-group" >
+    <label for="password-conf">Password:</label>
+    <input id="password-conf" type="password" ng-model="passwordConf">
+  </div>
+  <div class="form-group" >
+    <button type="submit" class="btn btn-default">Register</button>
+  </div>
+</form>
