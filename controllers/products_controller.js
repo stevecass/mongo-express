@@ -5,10 +5,20 @@ var Product = require('../models/product.js')(mongoose);
 var objectID = require('mongodb').ObjectID;
 var assigner = require('../lib/assigner');
 
-router.get('/', function(req, res){
-  res.redirect("/index.html");
+/* Filters */
+
+/* Let's log all requests */
+router.all("*", function(req, res, next){
+  console.log(req.method + ' ' + req.url);
+  /*
+  calling next() continues the chain. Contrast w rails
+  where the chain continues unless we stop it with a
+  render or redirect
+  */
+  next();
 });
 
+/* Ensure a user session exists */
 router.all('/api/products/*', function(req, res, next){
   if (!(req.session && req.session.userId)) {
     console.log('not logged in');
@@ -19,8 +29,11 @@ router.all('/api/products/*', function(req, res, next){
   }
 });
 
+/*
+  If we get a product id it should be valid format - else return a 404.
+  If we don't don this we'll get a crash when we try to use the ID
+ */
 router.all('/api/products/:id', function(req, res, next){
-  // If we get a product id it should be valid - else return a 404
   if (req.params.id) {
     if (!objectID.isValid(req.params.id)) {
       console.log("Passed invalid object id: " + req.params.id);
@@ -33,8 +46,14 @@ router.all('/api/products/:id', function(req, res, next){
   }
 });
 
-router.get('/api/products', function(req, res) {
 
+router.get('/', function(req, res){
+  res.redirect("/index.html");
+});
+
+
+router.get('/api/products', function(req, res) {
+  /* Product.find is supplied by mongoose */
   Product.find(function(err, products){
     if (err) {
       console.error(err);
@@ -60,6 +79,8 @@ router.get('/api/products/:id', function(req, res) {
 
 router.post('/api/products', function(req, res){
   product = new Product();
+  /*  We could use ES6 Object.assign but we want to
+      filter to just fields on the schema */
   assigner.setObjectFieldsFromParams(product, req.body);
   product.save(function(err, newprod) {
     if (err) {
