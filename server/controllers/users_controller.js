@@ -13,7 +13,7 @@ router.post('/api/login', function(req, res) {
     } else {
       console.log('session', req.session);
       req.session.userId = user._id;
-      res.send({userId: user._id});
+      res.send(user);
     }
   });
 });
@@ -61,7 +61,7 @@ router.post('/api/users', function(req, res){
     user.save(function(err) {
       console.log('In callback');
       console.log('args', arguments);
-      res.redirect('/api/users/' + user._id);
+      res.send(user);
     });
 
 });
