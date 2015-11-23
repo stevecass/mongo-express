@@ -122,26 +122,6 @@ router.put('/api/products/:id', function(req, res){
   });
 });
 
-router.post('/api/products/:id/comments', function(req, res){
-    product = Product.findById(req.params.id, function(err, product){
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error');
-      } else if (product === null) {
-        res.status(404).send('Not found');
-      } else {
-        var newComment = {
-          body: req.body.body,
-          date: new Date()
-        };
-        console.log(newComment);
-        product.comments.push(newComment);
-        saveProduct(res, product);
-      }
-    });
-
-});
-
 router.delete('/api/products/:id', function(req, res){
   product = Product.findById(req.params.id, function(err, product){
     if (err) {
