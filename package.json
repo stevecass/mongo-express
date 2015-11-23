@@ -4,10 +4,13 @@
   "description": "Simple MEAN demo",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
+    "cookie-session": "^1.2.0",
     "express": "^4.13.3",
-    "mongoose": "^4.2.5",
-    "mongodb": "^2.0.48"
+    "mongodb": "^2.0.48",
+    "mongoose": "^4.2.5"
   },
   "devDependencies": {},
   "scripts": {

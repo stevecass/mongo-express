@@ -1,4 +1,4 @@
-angular.module('products'). controller('FormController', 
+angular.module('products'). controller('FormController',
   ['$scope', '$location', '$route', 'Product', 'Shared',
   function($scope, $location, $route, Product, Shared ){
 
@@ -16,11 +16,14 @@ angular.module('products'). controller('FormController',
   }
 
   function loadExisting() {
-    p = Product.getOne({id: $route.current.params.id});
-    p.$promise.then(function(data){
-      $scope.product = data; 
+    var p = Product.getOne({id: $route.current.params.id}).$promise;
+    p.then(function(data){
+      $scope.product = data;
       Shared.product = data;
       $scope.mainHeader = "Edit Product " + $scope.product.name;
+    });
+    p.catch(function(error){
+      console.log(error);
     });
   }
 
@@ -37,7 +40,6 @@ angular.module('products'). controller('FormController',
     if ($scope.product.is_new) {
       retval = Product.post($scope.product);
     } else {
-      console.log('product', $scope.product);
       retval = Product.update($scope.product);
     }
 

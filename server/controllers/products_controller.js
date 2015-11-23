@@ -1,33 +1,39 @@
-var application_root = __dirname;
-var publicDir = application_root + "/public";
-var express = require("express");
-var path = require("path");
+var express  = require('express');
+var router   = express.Router();
 var mongoose = require('mongoose');
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+var Product = require('../models/product.js')(mongoose);
 var objectID = require('mongodb').ObjectID;
-app.use(bodyParser.json());
-app.use(express.static(publicDir));
-mongoose.connect('mongodb://localhost/mydb');
+var assigner = require('../lib/assigner');
 
-var Product = require('./models/product.js')(mongoose);
+/* Filters */
 
-var setObjectFieldsFromParams = function(obj, params) {
-  for (k in obj.schema.paths) {
-    if (params[k]) {
-      obj[k] = params[k];
-    }
-  }
-};
-
-
-app.get('/', function(req, res){
-  res.redirect("/index.html");
+/* Let's log all requests */
+router.all("*", function(req, res, next){
+  console.log(req.method + ' ' + req.url);
+  /*
+  calling next() continues the chain. Contrast w rails
+  where the chain continues unless we stop it with a
+  render or redirect
+  */
+  next();
 });
 
-app.all('/api/products/:id', function(req, res, next){
-  // If we get a product id it should be valid - else return a 404
+/* Ensure a user session exists */
+router.all('/api/products/*', function(req, res, next){
+  if (!(req.session && req.session.userId)) {
+    console.log('not logged in');
+    res.status(401).send('Unauthorized');
+  } else {
+    console.log('session user', req.session.userId);
+    next();
+  }
+});
+
+/*
+  If we get a product id it should be valid format - else return a 404.
+  If we don't don this we'll get a crash when we try to use the ID
+ */
+router.all('/api/products/:id', function(req, res, next){
   if (req.params.id) {
     if (!objectID.isValid(req.params.id)) {
       console.log("Passed invalid object id: " + req.params.id);
@@ -40,7 +46,14 @@ app.all('/api/products/:id', function(req, res, next){
   }
 });
 
-app.get('/api/products', function(req, res) {
+
+router.get('/', function(req, res){
+  res.redirect("/index.html");
+});
+
+
+router.get('/api/products', function(req, res) {
+  /* Product.find is supplied by mongoose */
   Product.find(function(err, products){
     if (err) {
       console.error(err);
@@ -51,7 +64,7 @@ app.get('/api/products', function(req, res) {
   });
 });
 
-app.get('/api/products/:id', function(req, res) {
+router.get('/api/products/:id', function(req, res) {
   Product.findById(req.params.id, function(err, product){
     if (err) {
       console.error(err);
@@ -64,9 +77,11 @@ app.get('/api/products/:id', function(req, res) {
   });
 });
 
-app.post('/api/products', function(req, res){
+router.post('/api/products', function(req, res){
   product = new Product();
-  setObjectFieldsFromParams(product, req.body);
+  /*  We could use ES6 Object.assign but we want to
+      filter to just fields on the schema */
+  assigner.setObjectFieldsFromParams(product, req.body);
   product.save(function(err, newprod) {
     if (err) {
       res.status(500).send(err.message);
@@ -78,7 +93,7 @@ app.post('/api/products', function(req, res){
   });
 });
 
-app.put('/api/products/:id', function(req, res){
+router.put('/api/products/:id', function(req, res){
   product = Product.findById(req.params.id, function(err, product){
     if (err) {
       console.error(err);
@@ -102,7 +117,7 @@ app.put('/api/products/:id', function(req, res){
   });
 });
 
-app.delete('/api/products/:id', function(req, res){
+router.delete('/api/products/:id', function(req, res){
   product = Product.findById(req.params.id, function(err, product){
     if (err) {
       console.error(err);
@@ -122,5 +137,4 @@ app.delete('/api/products/:id', function(req, res){
   });
 });
 
-app.listen(3000);
-
+module.exports = router;
