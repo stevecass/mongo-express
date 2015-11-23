@@ -14,7 +14,8 @@ angular.module('products'). factory('User', ['$resource', function($resource){
     getOne: {method:'GET', isArray:false},
     post: {method:'POST'},
     getCurrent: {method: 'GET', url: '/api/current-user'},
-    login: {method: 'POST', url: '/api/login'}
+    login: {method: 'POST', url: '/api/login'},
+    logout: {method: 'GET', url: '/api/logout'}
   });
 }]);
 

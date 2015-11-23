@@ -18,6 +18,11 @@ router.post('/api/login', function(req, res) {
   });
 });
 
+router.get('/api/logout', function(req, res){
+  req.session = null;
+  res.send({logoutStatus: 'OK'});
+});
+
 
 function sendUserById(req, res, id) {
   User.findById(id, function(err, user){

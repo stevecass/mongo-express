@@ -5,6 +5,7 @@ angular.module('products')
 
     if($location.path() === '/logout') {
       Shared.currentUser = null;
+      $http({method:'GET', url:'/api/logout'});
     }
 
     $scope.login = function() {
