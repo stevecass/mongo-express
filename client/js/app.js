@@ -8,7 +8,6 @@ angular.module('products').config(['$routeProvider',function($routeProvider) {
     $routeProvider.when('/login', {templateUrl: 'views/login.html', controller: 'LoginController', open:true});
     $routeProvider.when('/logout', {templateUrl: 'views/login.html', controller: 'LoginController', open:true});
     $routeProvider.otherwise({redirectTo: '/main'});
-
 }]);
 
 angular.module('products').run(['$rootScope', '$location', 'User', 'Shared',

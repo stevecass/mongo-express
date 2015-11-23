@@ -105,7 +105,6 @@ function saveProduct(res, product) {
       res.send(product);
     }
   });
-
 }
 
 router.put('/api/products/:id', function(req, res){

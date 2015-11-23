@@ -5,6 +5,5 @@ module.exports = function(mgoose) {
     price: Number,
     comments: [{ body: String, date: Date }]
    });
-
   return mgoose.model('Product', productSchema);
 };

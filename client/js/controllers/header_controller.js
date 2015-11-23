@@ -9,8 +9,5 @@ angular.module('products'). controller('HeaderController', ['$scope', 'Shared', 
     Shared.currentUser = data;
   });
 
-
-
-
 }]);
 

@@ -1,10 +1,11 @@
 angular.module('products'). controller('DetailController',
   ['$scope', '$location', '$route', 'Product', 'Shared',
   function($scope, $location, $route, Product, Shared ){
-  Product.getOne({id: $route.current.params.id}).$promise.then(function(data){
-   $scope.product = data;
-   Shared.product = data;
-  });
+    Product.getOne({id: $route.current.params.id}).$promise
+    .then(function(data){
+      $scope.product = data;
+      Shared.product = data;
+    });
 
     $scope.addComment = function() {
       var newComment = {body: $scope.commentBody, date: new Date()};
@@ -17,5 +18,6 @@ angular.module('products'). controller('DetailController',
         $scope.commentBody = "";
       });
     };
+
 }]);
 
