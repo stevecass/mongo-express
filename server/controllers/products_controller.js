@@ -93,6 +93,21 @@ router.post('/api/products', function(req, res){
   });
 });
 
+function saveProduct(res, product) {
+  product.save(function(err, product){
+    if (err) {
+      console.error(err);
+      res.status(500).send(err.message);
+    } else if (product === null) {
+      res.status(404).send('Not found');
+    } else {
+      res.status(200);
+      res.send(product);
+    }
+  });
+
+}
+
 router.put('/api/products/:id', function(req, res){
   product = Product.findById(req.params.id, function(err, product){
     if (err) {
@@ -101,20 +116,30 @@ router.put('/api/products/:id', function(req, res){
     } else if (product === null) {
       res.status(404).send('Not found');
     } else {
-      setObjectFieldsFromParams(product, req.body);
-      product.save(function(err, product){
-        if (err) {
-          console.error(err);
-          res.status(500).send(err.message);
-        } else if (product === null) {
-          res.status(404).send('Not found');
-        } else {
-          res.status(200);
-          res.send(product);
-        }
-      });
+      assigner.setObjectFieldsFromParams(product, req.body);
+      saveProduct(res, product);
     }
   });
+});
+
+router.post('/api/products/:id/comments', function(req, res){
+    product = Product.findById(req.params.id, function(err, product){
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error');
+      } else if (product === null) {
+        res.status(404).send('Not found');
+      } else {
+        var newComment = {
+          body: req.body.body,
+          date: new Date()
+        };
+        console.log(newComment);
+        product.comments.push(newComment);
+        saveProduct(res, product);
+      }
+    });
+
 });
 
 router.delete('/api/products/:id', function(req, res){
